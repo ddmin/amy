@@ -13,3 +13,4 @@
 - phone number memorize
 - rock paper scissor
 - war (cards)
+- simple dice board game
