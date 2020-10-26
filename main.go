@@ -32,7 +32,7 @@ func printTitle() {
 	}
 
 	for _, i := range amy {
-		scrollPrint(i, 80)
+		scrollPrint(i, 45)
 	}
 }
 
@@ -60,8 +60,8 @@ func main() {
 	// cool animation
 	boot()
 	fmt.Println()
-	time.Sleep(500 * time.Millisecond)
 	printTitle()
+	time.Sleep(time.Second)
 
 	// games.GuessingGame()
 	games.Hangman()
