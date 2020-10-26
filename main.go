@@ -63,6 +63,6 @@ func main() {
 	printTitle()
 	time.Sleep(time.Second)
 
-	// games.GuessingGame()
+	games.GuessingGame()
 	games.Hangman()
 }
