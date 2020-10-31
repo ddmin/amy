@@ -1,11 +1,7 @@
 package games
 
 import (
-	"bufio"
 	"fmt"
-	"os"
-	"strconv"
-	"strings"
 )
 
 const (
@@ -14,15 +10,6 @@ const (
 	hard   = 1000
 	insane = 1000000
 )
-
-func getUserInput() int {
-	scanner := bufio.NewReader(os.Stdin)
-	fmt.Print("> ")
-	n, _ := scanner.ReadString('\n')
-	n = strings.Replace(n, "\n", "", -1)
-	guess, _ := strconv.Atoi(n)
-	return guess
-}
 
 type difficulty struct {
 	n     string
@@ -41,7 +28,7 @@ func chooseDifficulty() *difficulty {
 	for i, d := range difficulties {
 		fmt.Printf("%d. %s\n", i+1, d.n)
 	}
-	input := getUserInput()
+	input := GetUserInt()
 	if input < 1 || input > 4 {
 		input = 1
 	}
@@ -61,7 +48,7 @@ func GuessingGame() {
 
 	for lives > 0 {
 		fmt.Printf("Lives: %d\n", lives)
-		userGuess = getUserInput()
+		userGuess = GetUserInt()
 		if userGuess < actual {
 			fmt.Println("Too Low!")
 			lives--
@@ -75,6 +62,7 @@ func GuessingGame() {
 	}
 
 	if userGuess == actual {
+		fmt.Println()
 		fmt.Println("You Win!")
 	} else {
 		fmt.Println("You Lose!")

@@ -3,11 +3,13 @@ package main
 
 import (
 	"fmt"
-	"github.com/ddmin/amy/games"
+	"os"
 	"time"
+
+	"github.com/ddmin/amy/games"
 )
 
-var version = "v1.0"
+var version = "v1.1"
 
 func scrollPrint(s string, t time.Duration) {
 	for _, c := range s {
@@ -52,17 +54,61 @@ func boot() {
 			sleep := games.PseudoRandom(0, 100)
 			time.Sleep(time.Duration(sleep) * time.Millisecond)
 		}
-		fmt.Println("]  DONE")
+		fmt.Println("]  ✓ DONE")
 	}
 }
 
-func main() {
-	// cool animation
-	boot()
-	fmt.Println()
-	printTitle()
-	time.Sleep(time.Second)
+type game struct {
+	name string
+	game func()
+}
 
-	games.GuessingGame()
-	games.Hangman()
+func exit() {
+	scrollPrint("See you later!", 40)
+	os.Exit(0)
+}
+
+func main() {
+	gameList := []game{
+		{"Guessing Game", games.GuessingGame},
+		{"Hangman", games.Hangman},
+		{"Exit", exit},
+	}
+
+	printBoot := true
+	// cool animation
+	if printBoot {
+		boot()
+		fmt.Println()
+		printTitle()
+		time.Sleep(time.Second)
+	}
+
+	for true {
+		fmt.Println()
+		scrollPrint("Do you want to play a game? [y/n]", 40)
+		response := games.GetUserString()
+		fmt.Println()
+
+		if string(response[0]) != "y" && string(response[0]) != "Y" {
+			exit()
+		}
+
+		scrollPrint("Which game do you want to play?", 40)
+		fmt.Println()
+
+		for i, v := range gameList {
+			fmt.Printf("%d. %s\n", i+1, v.name)
+		}
+
+		input := games.GetUserInt()
+
+		if input == 0 {
+			input = len(gameList)
+		}
+
+		currGame := gameList[input-1]
+		fmt.Println()
+		currGame.game()
+	}
 }
