@@ -90,7 +90,9 @@ func main() {
 		response := games.GetUserString()
 		fmt.Println()
 
-		if string(response[0]) != "y" && string(response[0]) != "Y" {
+		if len(response) < 1 {
+			exit()
+		} else if string(response[0]) != "y" && string(response[0]) != "Y" {
 			exit()
 		}
 
