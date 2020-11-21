@@ -1,11 +1,20 @@
 package games
 
 import (
+	"bufio"
+	"fmt"
 	"io/ioutil"
 	"math/rand"
+	"os"
+	"strconv"
 	"strings"
 	"time"
 )
+
+type Result struct {
+	Points    int
+	PlayerWin bool
+}
 
 func PseudoRandom(lo, hi int) int {
 	s1 := rand.NewSource(time.Now().UnixNano())
@@ -21,4 +30,18 @@ func RandomWord() string {
 
 	words := strings.Fields(string(dat))
 	return words[PseudoRandom(0, len(words)-1)]
+}
+
+func GetUserString() string {
+	scanner := bufio.NewReader(os.Stdin)
+	fmt.Print("> ")
+	input, _ := scanner.ReadString('\n')
+	input = strings.Replace(input, "\n", "", -1)
+	return input
+}
+
+func GetUserInt() int {
+	input := GetUserString()
+	guess, _ := strconv.Atoi(input)
+	return guess
 }

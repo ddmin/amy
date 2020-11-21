@@ -12,17 +12,18 @@ const (
 )
 
 type difficulty struct {
-	n     string
-	high  int
-	lives int
+	n      string
+	high   int
+	lives  int
+	points int
 }
 
 func chooseDifficulty() *difficulty {
 	difficulties := [...]difficulty{
-		{"EASY", easy, 5},
-		{"MEDIUM", medium, 10},
-		{"HARD", hard, 20},
-		{"INSANE", insane, 50},
+		{"EASY", easy, 5, 1},
+		{"MEDIUM", medium, 10, 2},
+		{"HARD", hard, 20, 4},
+		{"INSANE", insane, 50, 8},
 	}
 
 	for i, d := range difficulties {
@@ -36,7 +37,7 @@ func chooseDifficulty() *difficulty {
 	return &choice
 }
 
-func GuessingGame() {
+func GuessingGame() Result {
 	fmt.Println("Choose a difficulty:")
 	gameDifficulty := chooseDifficulty()
 	actual := PseudoRandom(1, gameDifficulty.high)
@@ -64,8 +65,16 @@ func GuessingGame() {
 	if userGuess == actual {
 		fmt.Println()
 		fmt.Println("You Win!")
+		return Result{
+			Points:    gameDifficulty.points,
+			PlayerWin: true,
+		}
 	} else {
 		fmt.Println("You Lose!")
 		fmt.Printf("The number was: %d\n", actual)
+		return Result{
+			Points:    1,
+			PlayerWin: false,
+		}
 	}
 }

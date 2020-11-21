@@ -86,7 +86,7 @@ func formatHangman(lives int) string {
 	// |_____
 }
 
-func Hangman() {
+func Hangman() Result {
 	lives := 6
 	guesses := map[string]bool{}
 	_, _ = lives, guesses
@@ -140,7 +140,16 @@ func Hangman() {
 	fmt.Printf("The word was: %s\n", word)
 	if hasWon(word, guesses) {
 		fmt.Println("You Win!")
+		return Result{
+			Points:    8,
+			PlayerWin: true,
+		}
 	} else if lives <= 0 {
 		fmt.Println("You Lose...")
+		return Result{
+			Points:    1,
+			PlayerWin: false,
+		}
 	}
+	return Result{}
 }
