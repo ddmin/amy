@@ -91,7 +91,7 @@ func LoadPlayer() Player {
 	player := Player{}
 	player.history = map[string]*Score{}
 
-	for _, game := range gameList[:len(gameList)-1] {
+	for _, game := range gameList {
 		player.history[game.name] = &Score{0, 0}
 	}
 
