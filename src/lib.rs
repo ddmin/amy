@@ -2,6 +2,7 @@ pub use colored::*;
 pub use rand::{seq::IteratorRandom, Rng};
 pub use std::fs;
 pub use std::io::{self, Write};
+pub use std::ops::RangeInclusive;
 
 pub mod games;
 
@@ -21,8 +22,8 @@ pub fn random_word() -> String {
     contents.lines().choose(&mut rng).unwrap().to_string()
 }
 
-pub fn random_number(lower: i32, upper: i32) -> i32 {
-    rand::thread_rng().gen_range(lower..upper + 1)
+pub fn random_number(range: RangeInclusive<i32>) -> i32 {
+    rand::thread_rng().gen_range(range)
 }
 
 pub fn user_string() -> String {

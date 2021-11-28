@@ -14,6 +14,7 @@ fn main() {
     let player = Player::new("Billy".to_string());
     let amy = Player::new("Amy".to_string());
 
-    let mut game = hangman::Hangman::new(random_word());
+    // let mut game = hangman::Hangman::new(random_word());
+    let mut game = guess::GuessingGame::new(1, 10000);
     game.gameloop((player, amy));
 }
