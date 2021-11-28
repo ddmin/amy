@@ -6,11 +6,24 @@ pub use std::ops::RangeInclusive;
 
 pub mod games;
 
-fn first_char(string: &str) -> Option<char> {
+pub enum Coin {
+    Heads,
+    Tails,
+}
+
+pub fn coin_flip() -> Coin {
+    let mut rng = rand::thread_rng();
+    match rng.gen_range(1..=2) {
+        1 => Coin::Heads,
+        _ => Coin::Tails,
+    }
+}
+
+pub fn first_char(string: &str) -> Option<char> {
     string.chars().next()
 }
 
-fn is_letter(c: char) -> bool {
+pub fn is_letter(c: char) -> bool {
     ('A'..='z').contains(&c)
 }
 

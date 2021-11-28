@@ -1,5 +1,6 @@
 pub mod hangman;
 pub mod guess;
+pub mod poison;
 
 pub struct Player {
     name: String,

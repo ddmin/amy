@@ -6,12 +6,10 @@ pub struct GuessingGame {
     range: (usize, usize),
     max_guesses: usize,
     total_guesses: usize,
-    guesses: Vec<usize>,
 }
 
 impl GuessingGame {
     pub fn new(lower: usize, upper: usize) -> GuessingGame {
-        let range = lower..=upper;
         let number = random_number(lower as i32..=upper as i32) as usize;
         let max_guesses = ((1f64 / (upper - lower + 1) as f64).log(0.5) + 1f64) as usize;
         GuessingGame {
@@ -19,7 +17,6 @@ impl GuessingGame {
             range: (lower, upper),
             max_guesses,
             total_guesses: 0,
-            guesses: Vec::new(),
         }
     }
 }
@@ -55,7 +52,10 @@ impl Game for GuessingGame {
                 Ordering::Less => println!("{}", "Too Low!".red()),
                 Ordering::Greater => println!("{}", "Too High!".red()),
                 Ordering::Equal => {
-                    println!("{}", format!("You got it! The number was {}.", self.number).green());
+                    println!(
+                        "{}",
+                        format!("You got it! The number was {}.", self.number).green()
+                    );
                     return GameResult {
                         winner: player,
                         award: self.max_guesses as i32 / 2,
