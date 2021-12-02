@@ -94,8 +94,8 @@ impl Hangman {
 }
 
 impl Game for Hangman {
-    fn gameloop(&mut self, players: (Player, Player)) -> GameResult {
-        let (player, amy) = players;
+    fn gameloop(&mut self, players: &Players) -> GameResult {
+        let (player, amy) = players.get_players();
 
         while self.total_guesses < self.max_guesses {
             println!();
@@ -167,7 +167,7 @@ impl Game for Hangman {
                 println!("{}", "You Win!".green());
                 println!("The word was: '{}'", self.word);
                 return GameResult {
-                    winner: player,
+                    winner: Winner::Human,
                     award: self.total_guesses as i32,
                 };
             }
@@ -177,7 +177,7 @@ impl Game for Hangman {
         println!("You Lose!");
         println!("The word was: {}", self.word);
         GameResult {
-            winner: amy,
+            winner: Winner::Amy,
             award: (self.max_guesses / 2) as i32,
         }
     }

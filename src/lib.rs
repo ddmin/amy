@@ -12,8 +12,7 @@ pub enum Coin {
 }
 
 pub fn coin_flip() -> Coin {
-    let mut rng = rand::thread_rng();
-    match rng.gen_range(1..=2) {
+    match random_number(1..=2) {
         1 => Coin::Heads,
         _ => Coin::Tails,
     }

@@ -11,11 +11,20 @@ const AMY_VERSION: f32 = 1.0;
 fn main() {
     println!("{}v{:0.1}", AMY_LOGO, AMY_VERSION);
 
-    let player = Player::new("Billy".to_string());
-    let amy = Player::new("Amy".to_string());
+    let player = Player::Human(Stats::new("Billy".to_string()));
+    let amy = Player::Amy(Stats::new("AMY".to_string()));
 
+    let players = Players::new(amy, player);
+
+    // Hangman
     // let mut game = hangman::Hangman::new(random_word());
+    // game.gameloop(&players);
+
+    // Guessing
     // let mut game = guess::GuessingGame::new(1, 100);
+    // game.gameloop(&players);
+
+    // Poison
     let mut game = poison::Poison::new();
-    game.gameloop((player, amy));
+    game.gameloop(&players);
 }
