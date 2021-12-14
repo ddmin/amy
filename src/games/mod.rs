@@ -1,6 +1,7 @@
 pub mod guess;
 pub mod hangman;
 pub mod poison;
+pub mod rps;
 
 pub enum Player {
     Amy(Stats),
@@ -50,9 +51,9 @@ pub struct GameResult {
 
 pub enum Winner {
     Amy,
-    Human,
+    Player,
 }
 
 pub trait Game {
-    fn gameloop(&mut self, players: &Players) -> GameResult;
+    fn gameloop(&mut self) -> GameResult;
 }

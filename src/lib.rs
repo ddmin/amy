@@ -1,4 +1,5 @@
 pub use colored::*;
+pub use std::fmt;
 pub use rand::{seq::IteratorRandom, Rng};
 pub use std::fs;
 pub use std::io::{self, Write};

@@ -17,14 +17,18 @@ fn main() {
     let players = Players::new(amy, player);
 
     // Hangman
-    // let mut game = hangman::Hangman::new(random_word());
-    // game.gameloop(&players);
+    let mut game = hangman::Hangman::new(random_word());
+    game.gameloop();
 
-    // Guessing
-    // let mut game = guess::GuessingGame::new(1, 100);
-    // game.gameloop(&players);
+    // // Guessing
+    let mut game = guess::GuessingGame::new(1, 100);
+    game.gameloop();
 
     // Poison
     let mut game = poison::Poison::new();
-    game.gameloop(&players);
+    game.gameloop();
+
+    // Rock Paper Scissors
+    let mut game = rps::RpsGame::new(4);
+    game.gameloop();
 }

@@ -22,9 +22,7 @@ impl GuessingGame {
 }
 
 impl Game for GuessingGame {
-    fn gameloop(&mut self, players: &Players) -> GameResult {
-        let (player, amy) = players.get_players();
-
+    fn gameloop(&mut self) -> GameResult {
         println!();
         println!(
             "{}",
@@ -58,7 +56,7 @@ impl Game for GuessingGame {
                         format!("You got it! The number was {}.", self.number).green()
                     );
                     return GameResult {
-                        winner: Winner::Human,
+                        winner: Winner::Player,
                         award: self.max_guesses as i32 / 2,
                     };
                 }

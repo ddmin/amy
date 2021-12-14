@@ -24,7 +24,7 @@ impl Poison {
                     amy_says += &format!("{: >2} ", number + 1);
                     player_says += "   ";
                 }
-                Turn::Human => {
+                Turn::Player => {
                     player_says += &format!("{: >2} ", number + 1);
                     amy_says += "   ";
                 }
@@ -34,27 +34,31 @@ impl Poison {
     }
 }
 
+impl Default for Poison {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 pub enum Turn {
     Amy,
-    Human,
+    Player,
 }
 
 impl Turn {
     fn flip(&mut self) {
         *self = match self {
-            Turn::Amy => Turn::Human,
-            Turn::Human => Turn::Amy,
+            Turn::Amy => Turn::Player,
+            Turn::Player => Turn::Amy,
         }
     }
 }
 
 impl Game for Poison {
-    fn gameloop(&mut self, players: &Players) -> GameResult {
-        let (player, amy) = players.get_players();
-
+    fn gameloop(&mut self) -> GameResult {
         let mut turn = match coin_flip() {
             Coin::Heads => Turn::Amy,
-            Coin::Tails => Turn::Human,
+            Coin::Tails => Turn::Player,
         };
         while self.current_number < self.target_number {
             println!();
@@ -76,8 +80,8 @@ impl Game for Poison {
                     self.current_number += amt;
                     println!("{}", msg.magenta());
                 }
-                Turn::Human => {
-                    println!("{}", format!("{}'s Turn", player.name()).blue());
+                Turn::Player => {
+                    println!("{}", "Your Turn".blue());
                     print!("{}", "Amount of numbers to say (1 or 2): ".yellow());
                     io::stdout().flush().unwrap();
                     let amt = match user_number() {
@@ -89,12 +93,12 @@ impl Game for Poison {
                     };
                     match amt {
                         1 => {
-                            self.tracker.push(Turn::Human);
+                            self.tracker.push(Turn::Player);
                             self.current_number += amt
                         }
                         2 => {
-                            self.tracker.push(Turn::Human);
-                            self.tracker.push(Turn::Human);
+                            self.tracker.push(Turn::Player);
+                            self.tracker.push(Turn::Player);
                             self.current_number += amt;
                         }
                         _ => {
@@ -111,20 +115,20 @@ impl Game for Poison {
 
         println!();
         match turn {
-            Turn::Human => {
+            Turn::Player => {
                 println!(
                     "{}",
                     format!("You Win! AMY said {}.", self.current_number).green()
                 );
                 GameResult {
-                    winner: Winner::Human,
+                    winner: Winner::Player,
                     award: 2,
                 }
             }
             Turn::Amy => {
                 println!("{}", "You Lose!".red());
                 GameResult {
-                    winner: Winner::Human,
+                    winner: Winner::Player,
                     award: 2,
                 }
             }
