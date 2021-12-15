@@ -86,6 +86,34 @@ pub fn user_number() -> Result<i32, std::num::ParseIntError> {
     user_string().parse()
 }
 
-// pub fn loading_bar()
-// pub fn box_message()
+pub fn enclose(string: &str) -> String {
+    format!(
+        "╭─{0}─╮\n│ {1} │\n╰─{0}─╯",
+        std::iter::repeat("─")
+            .take(string.len())
+            .collect::<String>(),
+        string
+    )
+}
+
+pub fn scroll_print(string: &str, delay: std::time::Duration) {
+    for c in string.chars() {
+        print!("{}", c);
+        io::stdout().flush().unwrap();
+        std::thread::sleep(delay);
+    }
+    println!();
+}
+
+pub fn loading_bar(segment: &str, length: usize, variance: usize) {
+    for _ in 0..length {
+        print!("{}", segment);
+        io::stdout().flush().unwrap();
+
+        let variance = random_number((0..=variance as i32));
+        std::thread::sleep(std::time::Duration::from_millis(variance as u64));
+    }
+    println!();
+}
+
 // pub fn write_file()
