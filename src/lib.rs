@@ -1,11 +1,46 @@
 pub use colored::*;
-pub use std::fmt;
 pub use rand::{seq::IteratorRandom, Rng};
+pub use std::fmt;
 pub use std::fs;
 pub use std::io::{self, Write};
 pub use std::ops::RangeInclusive;
 
 pub mod games;
+
+struct Menu<T> {
+    items: Vec<(String, T)>,
+    prompt: String,
+    error_prompt: String,
+}
+
+impl<T> Menu<T> {
+    fn new(items: Vec<(String, T)>, prompt: String, error_prompt: String) -> Menu<T> {
+        Menu {
+            items,
+            prompt,
+            error_prompt,
+        }
+    }
+
+    fn prompt(&self) -> Option<&T> {
+        println!("{}", self.prompt);
+        self.items.iter().enumerate().for_each(|(idx, (name, _))| {
+            println!("[{}] {}", idx + 1, name);
+        });
+        print!("> ");
+        io::stdout().flush().unwrap();
+
+        match user_number() {
+            Ok(choice) if (1..=self.items.len() as i32).contains(&choice) => {
+                Some(&self.items[choice as usize - 1].1)
+            }
+            _ => {
+                println!("{}", self.error_prompt);
+                None
+            }
+        }
+    }
+}
 
 pub enum Coin {
     Heads,

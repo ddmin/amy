@@ -89,26 +89,20 @@ impl RpsGame {
 
 impl Game for RpsGame {
     fn gameloop(&mut self) -> GameResult {
+        let rps_menu = Menu::new(
+            vec![
+                ("Rock".to_string(), Rps::Rock),
+                ("Paper".to_string(), Rps::Paper),
+                ("Scissors".to_string(), Rps::Scissor),
+            ],
+            "Choose an option:".blue().to_string(),
+            "Choose a number 1-3.".red().to_string(),
+        );
         while let RpsWinner::None = self.has_won() {
             println!();
-            println!("{}", "Choose a number:".blue());
-            println!("[1] Rock");
-            println!("[2] Paper");
-            println!("[3] Scissor");
-            print!("> ");
-            io::stdout().flush().unwrap();
-
-            let player_choice = match user_number() {
-                Ok(choice) if (1..=3).contains(&choice) => match choice {
-                    1 => Rps::Rock,
-                    2 => Rps::Paper,
-                    3 => Rps::Scissor,
-                    _ => unreachable!(),
-                },
-                _ => {
-                    println!("{}", "Enter a number 1-3.".red());
-                    continue;
-                }
+            let player_choice = match rps_menu.prompt() {
+                Some(choice) => choice,
+                None => continue,
             };
 
             let mut rng = rand::thread_rng();
