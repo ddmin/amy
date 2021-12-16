@@ -113,7 +113,6 @@ pub fn loading_bar(segment: &str, length: usize, variance: usize) {
         let variance = random_number((0..=variance as i32));
         std::thread::sleep(std::time::Duration::from_millis(variance as u64));
     }
-    println!();
 }
 
 // pub fn write_file()
