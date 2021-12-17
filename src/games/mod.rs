@@ -3,44 +3,36 @@ pub mod hangman;
 pub mod poison;
 pub mod rps;
 
-pub enum Player {
-    Amy(Stats),
-    Human(Stats),
-}
-
-impl Player {
-    pub fn name(&self) -> &str {
-        match self {
-            Player::Amy(stats) => &stats.name,
-            Player::Human(stats) => &stats.name,
-        }
-    }
-}
-
-pub struct Stats {
+struct PlayerInfo {
     name: String,
     points: i32,
 }
 
-impl Stats {
-    pub fn new(name: String) -> Stats {
-        Stats { name, points: 0 }
+impl PlayerInfo {
+    fn new(name: String) -> PlayerInfo {
+        PlayerInfo { name, points: 0 }
     }
 }
 
 pub struct Players {
-    amy: Player,
-    player: Player,
+    amy: PlayerInfo,
+    player: PlayerInfo,
 }
 
 impl Players {
-    pub fn new(amy: Player, player: Player) -> Players {
-        Players { amy, player }
+    pub fn new(player_name: String) -> Players {
+        Players {
+            amy: PlayerInfo::new("AMY".to_string()),
+            player: PlayerInfo::new(player_name),
+        }
     }
 
-    /// Returns a tuple containing (amy, player).
-    pub fn get_players(&self) -> (&Player, &Player) {
-        (&self.amy, &self.player)
+    pub fn amy(&self) -> &str {
+        &self.amy.name
+    }
+
+    pub fn player(&self) -> &str {
+        &self.player.name
     }
 }
 

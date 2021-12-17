@@ -7,7 +7,9 @@ const AMY_LOGO: &str = "  __ _ _ __ ___  _   _ \
                       \n                 |___/  ";
 
 const AMY_VERSION: f32 = 1.1;
+const SCROLL_SPEED: u64 = 30;
 
+// AMY boot up screen
 fn boot() {
     [
         "Updating AMY kernel",
@@ -25,16 +27,26 @@ fn boot() {
 }
 
 fn main() {
-    let player = Player::Human(Stats::new("Billy".to_string()));
-    let amy = Player::Amy(Stats::new("AMY".to_string()));
-
-    let players = Players::new(amy, player);
-
-    boot();
+    // boot();
     println!("{}v{:0.1}", AMY_LOGO, AMY_VERSION);
-    scroll_print("See you later!", std::time::Duration::from_millis(30));
 
     println!();
+    scroll_print(
+        "Hello! My name is AMY. What is your name?",
+        Duration::from_millis(SCROLL_SPEED),
+    );
+
+    print!("> ");
+    io::stdout().flush().unwrap();
+
+    let name = user_string();
+    let players = Players::new(name);
+
+    println!();
+    scroll_print(
+        &format!("Nice to meet you {}!", players.player()),
+        Duration::from_millis(SCROLL_SPEED),
+    );
 
     // Hangman
     // let mut game = hangman::Hangman::new(random_word());

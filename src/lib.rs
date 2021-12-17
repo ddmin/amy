@@ -4,6 +4,7 @@ pub use std::fmt;
 pub use std::fs;
 pub use std::io::{self, Write};
 pub use std::ops::RangeInclusive;
+pub use std::time::Duration;
 
 pub mod games;
 
@@ -96,7 +97,7 @@ pub fn enclose(string: &str) -> String {
     )
 }
 
-pub fn scroll_print(string: &str, delay: std::time::Duration) {
+pub fn scroll_print(string: &str, delay: Duration) {
     for c in string.chars() {
         print!("{}", c);
         io::stdout().flush().unwrap();

@@ -6,7 +6,7 @@ A terminal companion written in Rust.
 - Hangman
 - Guessing Game
 - Poison
+- Rock Paper Scissor
 
 ## TODO
 - serialize player data with serde
-- Rock Paper Scissor
